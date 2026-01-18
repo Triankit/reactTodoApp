@@ -1,7 +1,7 @@
 export function DisplayTask({ ele, task, setTask, setEditId, setEditTask }) {
 	function handleCheckboxChange(id) {
 		const newTasks = task.map((taskItem) => {
-			if ((ele.id = id)) {
+			if (taskItem.id === id) {
 				return {
 					...taskItem,
 					status: taskItem.status === "complete" ? "incomplete" : "complete",
@@ -40,7 +40,7 @@ export function DisplayTask({ ele, task, setTask, setEditId, setEditTask }) {
 					textDecoration: ele.status === "complete" ? "line-through" : "",
 				}}
 			>
-				{ele.name} [{ele.priority}]
+				{ele.name} [{ele.priority}] - Due: {ele.dueDate.toLocaleDateString()}
 			</label>
 			<button onClick={() => toogleEdit(ele.id)} style={{ marginLeft: "5px" }}>
 				✍🏻

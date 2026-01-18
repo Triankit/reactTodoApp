@@ -1,13 +1,7 @@
 import { useState } from "react";
 import { EditForm } from "./EditForm";
 import { DisplayTask } from "./DisplayTask";
-export function TaskList({
-	task,
-	setTask,
-	searchTerm,
-	userPriority,
-	setUserPriority,
-}) {
+export function TaskList({ task, setTask, userPriority, setUserPriority }) {
 	const [editId, setEditId] = useState(null);
 	const [editTask, setEditTask] = useState("");
 
@@ -31,7 +25,6 @@ export function TaskList({
 							ele={ele}
 							task={task}
 							setTask={setTask}
-							searchTerm={searchTerm}
 							setEditId={setEditId}
 							setEditTask={setEditTask}
 						/>
