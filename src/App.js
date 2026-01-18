@@ -1,6 +1,6 @@
-import Home from "./components/Home";
-import { SignUp } from "./components/SignUp";
-import { SignIn } from "./components/SignIn";
+import Home from "./components/layout/Home";
+import { SignUp } from "./components/auth/SignUp";
+import { SignIn } from "./components/auth/SignIn";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {

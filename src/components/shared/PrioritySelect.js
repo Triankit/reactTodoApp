@@ -1,4 +1,4 @@
-export function DropDown({ setUserPriority }) {
+export function PrioritySelect({ setUserPriority }) {
 	return (
 		<select
 			defaultValue=''

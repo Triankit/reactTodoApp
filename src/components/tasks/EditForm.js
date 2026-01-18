@@ -1,4 +1,4 @@
-import { DropDown } from "./DropDown";
+import { PrioritySelect } from "../shared/PrioritySelect";
 
 export function EditForm({
 	ele,
@@ -33,7 +33,7 @@ export function EditForm({
 					setEditTask(e.target.value);
 				}}
 			/>
-			<DropDown setUserPriority={setUserPriority} />
+			<PrioritySelect setUserPriority={setUserPriority} />
 			<button onClick={() => handleEdit(ele.id)}>✅</button>
 			<button onClick={() => setEditId(null)}>❌</button>
 		</div>

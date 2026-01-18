@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { userData } from "../utils/userData";
-import { validateEmail, isUserExist } from "../utils/utility";
+import { userData } from "../../utils/userData";
+import { validateEmail, isUserExist } from "../../utils/utility";
 import { useNavigate } from "react-router-dom";
+
 export function SignUp() {
 	const [user, setUser] = useState(userData);
 	const [username, setUsername] = useState("");
@@ -47,12 +48,14 @@ export function SignUp() {
 		userData.push(newUser);
 		setUser(userData);
 		setWarning("");
-		navigate("/Home");
+		navigate("/Home", {
+			state: { userEmail: newUser.email, isAuthenticated: true },
+		});
 	};
 
 	return (
 		<div style={styles.container}>
-			<h1>Sign Up</h1>
+			f<h1>Sign Up</h1>
 			<div style={styles.form}>
 				{warning.fieldsWarning && (
 					<label style={{ ...styles.label, color: "red" }}>

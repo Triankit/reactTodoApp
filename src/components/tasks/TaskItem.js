@@ -1,4 +1,4 @@
-export function DisplayTask({ ele, task, setTask, setEditId, setEditTask }) {
+export function TaskItem({ ele, task, setTask, setEditId, setEditTask }) {
 	function handleCheckboxChange(id) {
 		const newTasks = task.map((taskItem) => {
 			if (taskItem.id === id) {

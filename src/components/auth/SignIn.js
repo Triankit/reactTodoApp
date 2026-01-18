@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { userData } from "../utils/userData";
-import { validateUser } from "../utils/utility";
+import { userData } from "../../utils/userData";
+import { validateUser } from "../../utils/utility";
 import { Link, useNavigate } from "react-router-dom";
 export function SignIn() {
 	const [user, setUser] = useState({
 		email: "",
 		password: "",
 	});
+
 	const navigate = useNavigate();
 	const [warning, setWarning] = useState({
 		fieldsWarning: "",
@@ -28,7 +29,9 @@ export function SignIn() {
 		}
 		if (validateUser(user, userData)) {
 			setWarning("");
-			navigate("/Home");
+			navigate("/Home", {
+				state: { userEmail: user.email, isAuthenticated: true },
+			});
 		}
 	};
 	return (
@@ -65,7 +68,7 @@ export function SignIn() {
 					Sign In
 				</button>
 				<Link to='/SignUp' style={{ ...styles.footer, textDecoration: "none" }}>
-					<label>Don't have an account? Sign up</label>
+					<text>Don't have an account? Sign up</text>
 				</Link>
 			</div>
 		</div>

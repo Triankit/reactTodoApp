@@ -34,3 +34,8 @@ export function validateUser(user, userData) {
 			userDataUser.password === user.password
 	);
 }
+
+export function getUser(email, userData, isAuthenticated) {
+	if (isAuthenticated) return userData.find((user) => user.email === email);
+	return null;
+}

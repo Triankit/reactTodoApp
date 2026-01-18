@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { EditForm } from "./EditForm";
-import { DisplayTask } from "./DisplayTask";
+import { TaskItem } from "./TaskItem";
 export function TaskList({ task, setTask, userPriority, setUserPriority }) {
 	const [editId, setEditId] = useState(null);
 	const [editTask, setEditTask] = useState("");
@@ -21,7 +21,7 @@ export function TaskList({ task, setTask, userPriority, setUserPriority }) {
 							setUserPriority={setUserPriority}
 						/>
 					) : (
-						<DisplayTask
+						<TaskItem
 							ele={ele}
 							task={task}
 							setTask={setTask}

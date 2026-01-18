@@ -1,16 +1,29 @@
 import { useState, useEffect } from "react";
-import { TaskForm } from "./TaskForm";
-import { TaskList } from "./TaskList";
+import { CreateTask } from "../tasks/CreateTask";
+import { TaskList } from "../tasks/TaskList";
 import { Header } from "./Header";
-import { searchTask } from "../utils/utility";
-import { TaskSummary } from "./TaskSummary";
+import { searchTask } from "../../utils/utility";
+import { TaskDashboard } from "../tasks/TaskDashboard";
+import { useLocation } from "react-router-dom";
+import { getUser } from "../../utils/utility";
+import { userData } from "../../utils/userData";
 
 function Home() {
 	const [task, setTask] = useState([]);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [filteredTasks, setFilteredTasks] = useState([]);
 	const [userPriority, setUserPriority] = useState("");
+	const [user, setUser] = useState(null);
 
+	const location = useLocation();
+	const { userEmail, isAuthenticated } = location.state || {};
+
+	useEffect(() => {
+		if (isAuthenticated) {
+			const user = getUser(userEmail, userData, isAuthenticated);
+			setUser(user);
+		}
+	}, [userEmail, isAuthenticated]);
 	useEffect(() => {
 		if (searchTerm.length >= 3) {
 			const searchResults = searchTask(task, searchTerm);
@@ -23,13 +36,13 @@ function Home() {
 
 	return (
 		<div>
-			<Header setSearchTerm={setSearchTerm} />
-			<TaskSummary
+			<Header setSearchTerm={setSearchTerm} user={user} />
+			<TaskDashboard
 				task={task}
 				setTask={setTask}
 				setFilteredTasks={setFilteredTasks}
 			/>
-			<TaskForm
+			<CreateTask
 				setTask={setTask}
 				userPriority={userPriority}
 				setUserPriority={setUserPriority}

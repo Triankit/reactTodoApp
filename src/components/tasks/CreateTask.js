@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { DropDown } from "./DropDown";
+import { PrioritySelect } from "../shared/PrioritySelect";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-export function TaskForm({ setTask, userPriority, setUserPriority }) {
+export function CreateTask({ setTask, userPriority, setUserPriority }) {
 	const [userInput, setUserInput] = useState("");
 	const [dueDate, setDueDate] = useState(new Date());
 	function handleSubmit(event) {
@@ -26,7 +26,7 @@ export function TaskForm({ setTask, userPriority, setUserPriority }) {
 				onChange={(e) => setUserInput(e.target.value)}
 				placeholder='Enter the task'
 			/>
-			<DropDown setUserPriority={setUserPriority} />
+			<PrioritySelect setUserPriority={setUserPriority} />
 			<DatePicker
 				selected={dueDate}
 				onChange={(date) => setDueDate(date)}

@@ -1,7 +1,7 @@
-import { remainingTaskTodo } from "../utils/utility";
-import { filterByComplete } from "../utils/utility";
-import { filterByIncomplete } from "../utils/utility";
-export function TaskSummary({ task, setFilteredTasks }) {
+import { remainingTaskTodo } from "../../utils/utility";
+import { filterByComplete } from "../../utils/utility";
+import { filterByIncomplete } from "../../utils/utility";
+export function TaskDashboard({ task, setFilteredTasks }) {
 	function handleFilterComplete() {
 		const completedTasks = filterByComplete(task);
 		setFilteredTasks(completedTasks);
