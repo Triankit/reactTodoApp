@@ -1,13 +1,19 @@
 import { useState } from "react";
-import { userData } from "../../utils/userData";
+import { defaultUser } from "../../utils/userData";
 import { validateUser } from "../../utils/utility";
 import { Link, useNavigate } from "react-router-dom";
+import { getUser, updateUserLastLogin } from "../../utils/utility";
+
+import {
+	setCurrentUserToStorage,
+	setRememberMeFlag,
+} from "../../utils/userData";
 export function SignIn() {
 	const [user, setUser] = useState({
 		email: "",
 		password: "",
 	});
-
+	const [rememberMe, setRememberMe] = useState(false);
 	const navigate = useNavigate();
 	const [warning, setWarning] = useState({
 		fieldsWarning: "",
@@ -20,18 +26,27 @@ export function SignIn() {
 			setWarning({ ...warning, fieldsWarning: "All fields are required" });
 			return;
 		}
-		if (!validateUser(user, userData)) {
+		if (!validateUser(user, defaultUser)) {
 			setWarning({
 				...warning,
 				invalidUserWarning: "Invalid email or password",
 			});
 			return;
 		}
-		if (validateUser(user, userData)) {
+		const fullUser = getUser(user.email);
+		if (fullUser) {
+			updateUserLastLogin(user.email);
+			setCurrentUserToStorage(fullUser);
+			setRememberMeFlag(rememberMe);
 			setWarning("");
 			navigate("/Home", {
 				state: { userEmail: user.email, isAuthenticated: true },
 			});
+		}
+	};
+	const handleKeyDown = (e) => {
+		if (e.key === "Enter") {
+			handleSignIn();
 		}
 	};
 	return (
@@ -54,6 +69,7 @@ export function SignIn() {
 					style={styles.input}
 					onChange={(e) => setUser({ ...user, email: e.target.value })}
 					onFocus={() => setWarning("")}
+					onKeyDown={handleKeyDown}
 				/>
 				<br />
 				<input
@@ -62,13 +78,25 @@ export function SignIn() {
 					style={styles.input}
 					onChange={(e) => setUser({ ...user, password: e.target.value })}
 					onFocus={() => setWarning("")}
+					onKeyDown={handleKeyDown}
 				/>
 				<br />
+				<div style={styles.rememberMe}>
+					<input
+						type='checkbox'
+						id='rememberMe'
+						checked={rememberMe}
+						onChange={(e) => setRememberMe(e.target.checked)}
+					/>
+					<label htmlFor='rememberMe' style={styles.rememberMeLabel}>
+						Remember me
+					</label>
+				</div>
 				<button style={styles.button} onClick={handleSignIn}>
 					Sign In
 				</button>
 				<Link to='/SignUp' style={{ ...styles.footer, textDecoration: "none" }}>
-					<text>Don't have an account? Sign up</text>
+					<label>Don't have an account? Sign up</label>
 				</Link>
 			</div>
 		</div>
@@ -123,5 +151,14 @@ const styles = {
 		color: "red",
 		fontSize: "14px",
 		marginBottom: "10px",
+	},
+	rememberMe: {
+		display: "flex",
+		alignItems: "center",
+		marginBottom: "10px",
+	},
+	rememberMeLabel: {
+		marginLeft: "5px",
+		fontSize: "14px",
 	},
 };

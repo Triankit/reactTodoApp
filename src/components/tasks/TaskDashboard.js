@@ -37,6 +37,8 @@ const styles = {
 		border: "1px solid #ccc",
 		padding: "10px",
 		marginBottom: "10px",
+		backgroundColor: "#f8f9fa",
+		borderBottom: "1px solid #dee2e6",
 	},
 	button: {
 		marginRight: "10px",

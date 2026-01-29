@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { userData } from "../../utils/userData";
-import { validateEmail, isUserExist } from "../../utils/utility";
+import { validateEmail, isUserExist, createUser } from "../../utils/utility";
 import { useNavigate } from "react-router-dom";
+import { setCurrentUserToStorage } from "../../utils/userData";
 
 export function SignUp() {
-	const [user, setUser] = useState(userData);
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
@@ -31,7 +30,7 @@ export function SignUp() {
 			setWarning({ ...warning, emailWarning: "Invalid email" });
 			return;
 		}
-		if (isUserExist(email, user)) {
+		if (isUserExist(email)) {
 			setWarning({
 				...warning,
 				userExistWarning: "User with this email already exists",
@@ -40,17 +39,23 @@ export function SignUp() {
 		}
 
 		const newUser = {
-			id: Date.now(),
 			name: username,
 			password: password,
 			email: email,
 		};
-		userData.push(newUser);
-		setUser(userData);
+		const createdUser = createUser(newUser);
+
+		setCurrentUserToStorage(createdUser);
 		setWarning("");
 		navigate("/Home", {
 			state: { userEmail: newUser.email, isAuthenticated: true },
 		});
+	};
+
+	const handleKeyDown = (e) => {
+		if (e.key === "Enter") {
+			handleSignUp();
+		}
 	};
 
 	return (
@@ -78,6 +83,7 @@ export function SignUp() {
 					placeholder='Enter password'
 					onChange={(e) => setPassword(e.target.value)}
 					onFocus={() => setWarning("")}
+					onKeyDown={handleKeyDown}
 				/>
 				<br />
 				<label style={styles.label}>Confirm Password:</label>
@@ -87,6 +93,7 @@ export function SignUp() {
 					placeholder='Confirm password'
 					onChange={(e) => setConfirmPassword(e.target.value)}
 					onFocus={() => setWarning("")}
+					onKeyDown={handleKeyDown}
 				/>
 				{warning.passwordWarning && (
 					<label style={{ ...styles.label, color: "red" }}>
@@ -101,6 +108,7 @@ export function SignUp() {
 					placeholder='Enter email'
 					onChange={(e) => setEmail(e.target.value)}
 					onFocus={() => setWarning("")}
+					onKeyDown={handleKeyDown}
 				/>
 				{warning.emailWarning && (
 					<label style={{ ...styles.label, color: "red" }}>

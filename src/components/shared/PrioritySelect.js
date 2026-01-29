@@ -1,8 +1,8 @@
-export function PrioritySelect({ setUserPriority }) {
+export function PrioritySelect({ setUserPriority, styles }) {
 	return (
 		<select
 			defaultValue=''
-			style={{ margin: "5px" }}
+			style={styles}
 			onChange={(e) => setUserPriority(e.target.value)}
 		>
 			<option value='' disabled>
